@@ -14,13 +14,13 @@ for image in entries:
         break
     image = Image.open('./images/train/angry/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([0])
     cnt+=1
 
 # write disgust pictures
-entries = os.listdir('./images/train/disgust')
+entries = os.listdir('./images/train/disgust')/255
 
 cnt = 1
 for image in entries:
@@ -29,7 +29,7 @@ for image in entries:
         break
     image = Image.open('./images/train/disgust/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([1])
     cnt+=1
@@ -44,7 +44,7 @@ for image in entries:
         break
     image = Image.open('./images/train/fear/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([2])
     cnt+=1
@@ -59,7 +59,7 @@ for image in entries:
         break
     image = Image.open('./images/train/happy/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([3])
     cnt+=1
@@ -74,7 +74,7 @@ for image in entries:
         break
     image = Image.open('./images/train/neutral/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([4])
     cnt+=1
@@ -89,7 +89,7 @@ for image in entries:
         break
     image = Image.open('./images/train/sad/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([5])
     cnt+=1
@@ -104,7 +104,7 @@ for image in entries:
         break
     image = Image.open('./images/train/surprise/' + image).convert('L')
     image = np.array(image)
-    image = image.reshape(image.shape[0]**2)
+    image = image.reshape(image.shape[0]**2)/255
     data_dic["X"].append(image)
     data_dic["y"].append([6])
     cnt+=1
