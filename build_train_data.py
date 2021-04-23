@@ -4,110 +4,72 @@ import os
 from PIL import Image 
 
 data_dic ={"X":[],"y":[]}
+
+subsets = {
+    'training': {
+        'dir': './images/train/',
+        'start': 0,
+        'samples': 1000,
+        'output': 'training_data'
+    },
+    'dev': {
+        'dir': './images/test/',
+        'start': 200,
+        'samples': 200,
+        'output': 'dev_data'
+    },
+    'test': {
+        'dir': './images/test/',
+        'start': 0,
+        'samples': 200,
+        'output': 'test_data'
+    }
+}
+
+emotionsSet = [
+    ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
+    ['disgust', 'surprise'],
+    ['disgust', 'angry'],
+    ['fear', 'angry'],
+    ['happy', 'sad'],
+    ['fear', 'angry', 'surprise'],
+    ['fear', 'neutral', 'happy']
+]
+
+# Foreach emotion set
+for emotions in emotionsSet:
+    print("Emotion set",emotions)
+
+    # Foreach subset 
+    for subset, subsetinfo in subsets.items():
+        print("Subset", subset)
+        i = 0
+
+        # Foreach emotion
+        for e in emotions:
+            dir = subsetinfo['dir'] + e + '/'
+            # For disgust on dev, get from train
+            if e=='disgust' and subset=='dev':
+                dir = './images/train/disgust/'
+            entries = os.listdir(dir)
+            cnt = 1
+            print(i, e, end="\t\t\t")
+
+            for image in entries[subsetinfo['start']::]:
+                if cnt>subsetinfo['samples']:
+                    break
+                image = Image.open(dir + image).convert('L')
+                image = np.array(image)
+                image = image.reshape(image.shape[0]**2)/255
+                data_dic["X"].append(image)
+                data_dic["y"].append([i])
+                cnt+=1
+            
+            print(f"Got {cnt-1} images!")
+            i += 1    
+        
+        scp.savemat(subsetinfo['output'] + '_' + '_'.join(emotions) + '.mat', data_dic)
+        print()
+    print()
     
-# write angry pictures
-entries = os.listdir('./images/train/angry')
 
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        break
-    image = Image.open('./images/train/angry/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([0])
-    cnt+=1
-
-# write disgust pictures
-entries = os.listdir('./images/train/disgust')/255
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/disgust/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([1])
-    cnt+=1
-
-# write fear pictures
-entries = os.listdir('./images/train/fear')
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/fear/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([2])
-    cnt+=1
-
-# write happy pictures
-entries = os.listdir('./images/train/happy')
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/happy/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([3])
-    cnt+=1
-
-# write neutral pictures
-entries = os.listdir('./images/train/neutral')
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/neutral/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([4])
-    cnt+=1
-
-# write sad pictures
-entries = os.listdir('./images/train/sad')
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/sad/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([5])
-    cnt+=1
-
-# write surprise pictures
-entries = os.listdir('./images/train/surprise')
-
-cnt = 1
-for image in entries:
-    if cnt>1000:
-        cnt=1
-        break
-    image = Image.open('./images/train/surprise/' + image).convert('L')
-    image = np.array(image)
-    image = image.reshape(image.shape[0]**2)/255
-    data_dic["X"].append(image)
-    data_dic["y"].append([6])
-    cnt+=1
-
-
-scp.savemat('training_data.mat', data_dic)
