@@ -3,8 +3,6 @@ import scipy.io as scp
 import os 
 from PIL import Image 
 
-data_dic ={"X":[],"y":[]}
-
 subsets = {
     'training': {
         'dir': './images/train/',
@@ -42,6 +40,8 @@ for emotions in emotionsSet:
 
     # Foreach subset 
     for subset, subsetinfo in subsets.items():
+        data_dic ={"X":[],"y":[]}
+
         print("Subset", subset)
         i = 0
 
@@ -68,8 +68,9 @@ for emotions in emotionsSet:
             print(f"Got {cnt-1} images!")
             i += 1    
         
-        scp.savemat(subsetinfo['output'] + '_' + '_'.join(emotions) + '.mat', data_dic)
-        print()
+        filename = subsetinfo['output'] + '_' + '_'.join(emotions) + '.mat'
+        scp.savemat(filename, data_dic)
+        print(f"Saved at {filename}\n")
     print()
     
 
