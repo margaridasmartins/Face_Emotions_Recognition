@@ -5,33 +5,33 @@ from PIL import Image
 
 subsets = {
     'training': {
-        'dir': './images/train/',
+        'dir': './datasets/images/train/',
         'start': 0,
         'samples': 1000,
-        'output': 'training_data'
+        'folder': './datasets/train'
     },
     'dev': {
-        'dir': './images/test/',
+        'dir': './datasets/images/test/',
         'start': 200,
         'samples': 200,
-        'output': 'dev_data'
+        'folder': './datasets/dev'
     },
     'test': {
-        'dir': './images/test/',
+        'dir': './datasets/images/test/',
         'start': 0,
         'samples': 200,
-        'output': 'test_data'
+        'folder': './datasets/test'
     }
 }
 
 emotionsSet = [
-    ['angry', 'disgust', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
-    ['disgust', 'surprise'],
-    ['disgust', 'angry'],
+    ['angry', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
+    ['fear', 'angry', 'surprise','neutral'],
+    ['happy', 'angry', 'neutral'],
     ['fear', 'angry'],
     ['happy', 'sad'],
     ['fear', 'angry', 'surprise'],
-    ['fear', 'neutral', 'happy']
+    ['fear', 'sad', 'happy']
 ]
 
 # Foreach emotion set
@@ -48,9 +48,6 @@ for emotions in emotionsSet:
         # Foreach emotion
         for e in emotions:
             dir = subsetinfo['dir'] + e + '/'
-            # For disgust on dev, get from train
-            if e=='disgust' and subset=='dev':
-                dir = './images/train/disgust/'
             entries = os.listdir(dir)
             cnt = 1
             print(i, e, end="\t\t\t")
@@ -68,7 +65,7 @@ for emotions in emotionsSet:
             print(f"Got {cnt-1} images!")
             i += 1    
         
-        filename = subsetinfo['output'] + '_' + '_'.join(emotions) + '.mat'
+        filename =  subsetinfo['folder'] +'/' + '_'.join(emotions) + '.mat'
         scp.savemat(filename, data_dic)
         print(f"Saved at {filename}\n")
     print()
