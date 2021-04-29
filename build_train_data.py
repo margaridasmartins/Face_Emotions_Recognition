@@ -24,6 +24,11 @@ subsets = {
     }
 }
 
+# Create folders if they dont exist
+for s in subsets.values():
+    if not os.path.exists(s['folder']):
+        os.makedirs(s['folder'])
+
 emotionsSet = [
     ['angry', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
     ['fear', 'angry', 'surprise','neutral'],
