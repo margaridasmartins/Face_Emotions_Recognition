@@ -73,6 +73,10 @@ for emotions in emotionsSet:
         filename =  subsetinfo['folder'] +'/' + '_'.join(emotions) + '.mat'
         scp.savemat(filename, data_dic)
         print(f"Saved at {filename}\n")
+        print("X", len(data_dic["X"]))
+        print("y", len(data_dic["y"]))
+        print("\n\n")
+        
     print()
     
 
