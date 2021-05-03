@@ -63,7 +63,7 @@ for emotions in emotionsSet:
                     break
                 image = Image.open(dir + image).convert('L')
                 image = np.array(image)
-                # image = image.reshape(image.shape[0]**2)/255
+                image = image.reshape(image.shape[0]**2)/255
                 data_dic["X"].append(image)
                 data_dic["y"].append([i])
                 cnt+=1
