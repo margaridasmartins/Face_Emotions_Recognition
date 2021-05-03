@@ -4,23 +4,11 @@ import os
 from PIL import Image 
 
 subsets = {
-    'training': {
-        'dir': './datasets/images/train/',
-        'start': 0,
-        'samples': 1000,
-        'folder': './datasets/train'
-    },
-    'dev': {
-        'dir': './datasets/images/test/',
-        'start': 200,
-        'samples': 200,
-        'folder': './datasets/dev'
-    },
     'test': {
-        'dir': './datasets/images/test/',
+        'dir': './datasets/images/goncalo_catalog/processed/',
         'start': 0,
         'samples': 200,
-        'folder': './datasets/test'
+        'folder': './datasets/goncalo_catalog'
     }
 }
 
@@ -30,13 +18,7 @@ for s in subsets.values():
         os.makedirs(s['folder'])
 
 emotionsSet = [
-    ['angry', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
-    ['fear', 'angry', 'surprise','neutral'],
-    ['happy', 'angry', 'neutral'],
-    ['fear', 'angry'],
-    ['happy', 'sad'],
-    ['fear', 'angry', 'surprise'],
-    ['fear', 'sad', 'happy']
+    ['happy', 'neutral']
 ]
 
 # Foreach emotion set
