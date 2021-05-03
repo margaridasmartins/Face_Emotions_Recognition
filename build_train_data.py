@@ -4,11 +4,23 @@ import os
 from PIL import Image 
 
 subsets = {
+    'training': {
+        'dir': './datasets/images/train/',
+        'start': 0,
+        'samples': 1000,
+        'folder': './datasets/train'
+    },
+    'dev': {
+        'dir': './datasets/images/test/',
+        'start': 200,
+        'samples': 200,
+        'folder': './datasets/dev'
+    },
     'test': {
-        'dir': './datasets/images/goncalo_catalog/processed/',
+        'dir': './datasets/images/test/',
         'start': 0,
         'samples': 200,
-        'folder': './datasets/goncalo_catalog'
+        'folder': './datasets/test'
     }
 }
 
@@ -18,7 +30,14 @@ for s in subsets.values():
         os.makedirs(s['folder'])
 
 emotionsSet = [
-    ['happy', 'neutral']
+    ['angry', 'fear', 'happy', 'neutral', 'sad', 'surprise'],
+    ['fear', 'angry', 'surprise','neutral'],
+    ['happy', 'angry', 'neutral'],
+    ['fear', 'angry'],
+    ['happy', 'sad'],
+    ['happy', 'neutral'],
+    ['fear', 'angry', 'surprise'],
+    ['fear', 'sad', 'happy']
 ]
 
 # Foreach emotion set
@@ -44,7 +63,7 @@ for emotions in emotionsSet:
                     break
                 image = Image.open(dir + image).convert('L')
                 image = np.array(image)
-                image = image.reshape(image.shape[0]**2)/255
+                # image = image.reshape(image.shape[0]**2)/255
                 data_dic["X"].append(image)
                 data_dic["y"].append([i])
                 cnt+=1
@@ -56,6 +75,7 @@ for emotions in emotionsSet:
         scp.savemat(filename, data_dic)
         print(f"Saved at {filename}\n")
         print("X", len(data_dic["X"]))
+        print("X[0].shape", data_dic["X"][0].shape)
         print("y", len(data_dic["y"]))
         print("\n\n")
         
