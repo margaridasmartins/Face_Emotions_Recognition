@@ -1,7 +1,0 @@
-all - 0.375
-happy_sad - 0.7125
-fear_angry_surprise - 0.542
-happy_angry_neutral - 0.533
-fear_angry - 0.595
-fear_sad_happy - 0.537
-fear_angry_surprise_neutral - 0.4525
